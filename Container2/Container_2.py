@@ -53,7 +53,7 @@ def computeSum():
                             if len(line) < 2 or len(line) > 2:
                                 return errorMsgCsv 
                             continue
-
+                        #test
                         #if file not in CSV format return error message - check #2 code
                         if len(line) < 2 or len(line) > 2:
                             return errorMsgCsv 
