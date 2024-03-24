@@ -5,21 +5,30 @@ metadata:
   labels:
     app: my-app
 spec:
-  containers:
-    - name: container1
-      image: us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont1:latest
-      ports:
-        - containerPort: 6000
-      volumeMounts:
-        - mountPath: /Uchenna_PV_dir
-          name: data
-    - name: container2
-      image: us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont2:latest
-      ports:
-        - containerPort: 5000
-      volumeMounts:
-        - mountPath: /Uchenna_PV_dir
-          name: data
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: container1
+          image: us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont1:latest
+          ports:
+            - containerPort: 6000
+          volumeMounts:
+            - mountPath: /Uchenna_PV_dir
+              name: data
+        - name: container2
+          image: us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont2:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /Uchenna_PV_dir
+              name: data
   volumes:
     - name: data
       persistentVolumeClaim:
