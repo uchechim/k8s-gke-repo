@@ -9,9 +9,6 @@ steps:
       ]
     id: 'Build Container 1 Docker Image'
 
-    # images:
-    # - 'us-central1-docker.pkg.dev/<your_project_id>/gke-repo/quickstart-image'
-
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [

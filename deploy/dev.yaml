@@ -6,4 +6,4 @@ metadata:
   labels: {}
 description: dev
 gke:
-  cluster: projects/K8s-CSCI5409/locations/us-central1-a/clusters/k8s-gke-cluster
+  cluster: projects/k8s-csci5409-417923/locations/us-central1-a/clusters/k8s-gke-cluster
