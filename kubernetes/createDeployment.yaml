@@ -29,10 +29,10 @@ spec:
           volumeMounts:
             - mountPath: /Uchenna_PV_dir
               name: data
-  volumes:
-    - name: data
-      persistentVolumeClaim:
-        claimName: k8s-gke-pvc
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: k8s-gke-pvc
 
 ---
 apiVersion: v1
