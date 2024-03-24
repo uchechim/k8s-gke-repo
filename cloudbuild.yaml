@@ -1,0 +1,53 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont1:latest',
+        './Container1',
+      ]
+    id: 'Build Container 1 Docker Image'
+
+    # images:
+    # - 'us-central1-docker.pkg.dev/<your_project_id>/gke-repo/quickstart-image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont1:latest',
+      ]
+    id: 'Push Container 1 Docker Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont2:latest',
+        './Container2',
+      ]
+    id: 'Build Container 2 Docker Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/k8s-csci5409-417923/k8s-docker-repo/cont2:latest',
+      ]
+    id: 'Push Container 2 Docker Image'
+
+  - name: 'google/cloud-sdk:latest'
+    entrypoint: 'sh'
+    args:
+      - -xe
+      - -c
+      - |
+        gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
+        gcloud deploy apply --file deploy/dev.yaml --region=us-central1
+
+        gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=k8s-gke-cicd-pipeline --region=us-central1 --from-k8s-manifest=./kubernetes/createDeployment.yaml
+
+options:
+  logging: CLOUD_LOGGING_ONLY
